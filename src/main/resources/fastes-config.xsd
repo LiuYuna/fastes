@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://fastes.agony.icu/config">
+
+    <xs:complexType name="configuration">
+        <xs:all>
+            <xs:element name="connect" type="configuration_connect"/>
+            <xs:element name="mappings" type="mappings"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="configuration_connect">
+        <xs:all>
+            <xs:element name="property" type="configuration_connect_property"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="configuration_connect_property">
+        <xs:attribute name="key" type="xs:string"/>
+        <xs:attribute name="value" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="mappings">
+        <xs:all>
+            <xs:element name="mapping" type="mappings_mapping"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="mappings_mapping">
+        <xs:attribute name="path" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:element name="configuration" type="configuration"/>
+
+</xs:schema>

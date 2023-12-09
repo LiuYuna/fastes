@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://fastes.agony.icu/mapping">
+
+    <xs:simpleType name="httpMethod">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="GET"/>
+            <xs:enumeration value="POST"/>
+            <xs:enumeration value="PUT"/>
+            <xs:enumeration value="DELETE"/>
+            <xs:enumeration value="HEAD"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="mapping" mixed="true">
+        <xs:attribute name="id" type="xs:string"/>
+        <xs:attribute name="method" type="httpMethod"/>
+        <xs:attribute name="api" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="mappings">
+        <xs:all>
+            <xs:element name="mapping" type="mapping"/>
+        </xs:all>
+        <xs:attribute name="namespace" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:element name="mappings" type="mappings"/>
+
+</xs:schema>

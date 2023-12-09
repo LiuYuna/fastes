@@ -1,0 +1,13 @@
+<configuration>
+
+    <connect>
+        <property key="url" value="http://localhost:9200"/>
+        <property key="username" value="elastic"/>
+        <property key="password" value="elastic"/>
+    </connect>
+
+    <mappings>
+        <mapping path="fastes-mapping.xml"/>
+    </mappings>
+
+</configuration>
