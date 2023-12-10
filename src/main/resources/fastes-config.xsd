@@ -1,34 +1,140 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://fastes.agony.icu/config">
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns="http://fastes.agony.icu/config"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://fastes.agony.icu/config"
+           elementFormDefault="qualified">
 
-    <xs:complexType name="configuration">
-        <xs:all>
-            <xs:element name="connect" type="configuration_connect"/>
-            <xs:element name="mappings" type="mappings"/>
-        </xs:all>
-    </xs:complexType>
+    <xs:element name="configuration">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="properties"/>
+                <xs:element minOccurs="0" ref="settings"/>
+                <xs:element minOccurs="0" ref="typeAliases"/>
+                <xs:element minOccurs="0" ref="typeHandlers"/>
+                <xs:element minOccurs="0" ref="mappers"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
-    <xs:complexType name="configuration_connect">
-        <xs:all>
-            <xs:element name="property" type="configuration_connect_property"/>
-        </xs:all>
-    </xs:complexType>
+    <xs:element name="properties">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="property"/>
+            </xs:sequence>
+            <xs:attribute name="resource"/>
+            <xs:attribute name="url"/>
+        </xs:complexType>
+    </xs:element>
 
-    <xs:complexType name="configuration_connect_property">
-        <xs:attribute name="key" type="xs:string"/>
-        <xs:attribute name="value" type="xs:string"/>
-    </xs:complexType>
+    <xs:element name="property">
+        <xs:complexType>
+            <xs:attribute name="name" use="required">
+                <xs:simpleType>
+                    <xs:restriction>
+                        <xs:enumeration value="url"/>
+                        <xs:enumeration value="username"/>
+                        <xs:enumeration value="password"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="value" use="required"/>
+        </xs:complexType>
+    </xs:element>
 
-    <xs:complexType name="mappings">
-        <xs:all>
-            <xs:element name="mapping" type="mappings_mapping"/>
-        </xs:all>
-    </xs:complexType>
+    <xs:element name="settings">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="setting"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
-    <xs:complexType name="mappings_mapping">
-        <xs:attribute name="path" type="xs:string" use="required"/>
-    </xs:complexType>
+    <xs:element name="setting">
+        <xs:complexType>
+            <xs:attribute name="name" use="required">
+                <xs:simpleType>
+                    <xs:restriction>
+                        <xs:enumeration value="mapUnderscoreToCamelCase">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    将下划线映射为骆驼形大小写：默认false
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="defaultFetchSize">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    批次获取数量：默认10
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="defaultStatementTimeout">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    执行超时时间：单位ms
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="value" use="required"/>
+        </xs:complexType>
+    </xs:element>
 
-    <xs:element name="configuration" type="configuration"/>
+    <xs:element name="typeAliases">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="typeAlias"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="package"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="typeAlias">
+        <xs:complexType>
+            <xs:attribute name="type" use="required"/>
+            <xs:attribute name="alias"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="typeHandlers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="typeHandler"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="package"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="typeHandler">
+        <xs:complexType>
+            <xs:attribute name="javaType"/>
+            <xs:attribute name="jdbcType"/>
+            <xs:attribute name="handler" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="mappers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="mapper"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="package"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="mapper">
+        <xs:complexType>
+            <xs:attribute name="resource"/>
+            <xs:attribute name="class"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="package">
+        <xs:complexType>
+            <xs:attribute name="name" use="required"/>
+        </xs:complexType>
+    </xs:element>
 
 </xs:schema>

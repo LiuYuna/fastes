@@ -1,13 +1,20 @@
-<configuration>
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration xmlns="http://fastes.agony.icu/config">
 
-    <connect>
-        <property key="url" value="http://localhost:9200"/>
-        <property key="username" value="elastic"/>
-        <property key="password" value="elastic"/>
-    </connect>
+    <properties>
+        <property name="url" value="http://localhost:3306"/>
+        <property name="username" value="elastic"/>
+        <property name="password" value="elastic"/>
+    </properties>
 
-    <mappings>
-        <mapping path="fastes-mapping.xml"/>
-    </mappings>
+    <settings>
+        <setting name="defaultFetchSize" value="100"/>
+        <setting name="defaultStatementTimeout" value="10"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <mappers>
+        <mapper resource="mappers/StudentMapper"/>
+    </mappers>
 
 </configuration>
